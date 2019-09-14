@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алексей Сивцов](https://up.htmlacademy.ru/javascript/18/user/905693).
-* Наставник: [Александр Мастеров] (https://htmlacademy.ru/profile/id912463).
+* Наставник: [Александр Мастеров](https://htmlacademy.ru/profile/id912463).
 
 ---
 
