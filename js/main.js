@@ -1,9 +1,9 @@
 'use strict';
 
-var PinSize = {WIDTH: 70, HEIGHT: 50, RADIUS: 25};
-var MapSet = {LEFT: 0, TOP: 130, RIGHT: 1200, BOTTOM: 630};
+var PinSizes = {WIDTH: 70, HEIGHT: 50, RADIUS: 25};
+var MapSets = {LEFT: 0, TOP: 130, RIGHT: 1200, BOTTOM: 630};
 var COUNT_ADV = 8;
-var MASS_ADV_TYPE = ['palace', 'flat', 'house', 'bungalo'];
+var MASS_ADV_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var MASS_ADV_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var MASS_ADV_PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
@@ -11,7 +11,7 @@ var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
-var createAdvData = function () {
+var createAdvs = function () {
 
   var massOfferVar = [];
   for (var i = 0; i < COUNT_ADV; i++) {
@@ -25,7 +25,7 @@ var createAdvData = function () {
         'title': 'заголовок предложения',
         'address': 'string',
         'price': 100500,
-        'type': MASS_ADV_TYPE[getRandomNumber(0, MASS_ADV_TYPE.length)],
+        'type': MASS_ADV_TYPES[getRandomNumber(0, MASS_ADV_TYPES.length)],
         'rooms': 4,
         'guests': 4,
         'checkin': 'string',
@@ -36,8 +36,8 @@ var createAdvData = function () {
       },
 
       'location': {
-        'x': getRandomNumber(MapSet.LEFT, MapSet.RIGHT),
-        'y': getRandomNumber(MapSet.TOP, MapSet.BOTTOM)
+        'x': getRandomNumber(MapSets.LEFT, MapSets.RIGHT),
+        'y': getRandomNumber(MapSets.TOP, MapSets.BOTTOM)
       }
     };
   }
@@ -45,38 +45,27 @@ var createAdvData = function () {
   return massOfferVar;
 };
 
-var makeElement = function (tagName, className, text) {
-  var element = document.createElement(tagName);
-  element.classList.add(className);
-  if (text) {
-    element.textContent = text;
-  }
-  return element;
-};
+var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
-var createPin = function (inputMass) {
-  var mapPin = makeElement('button', 'map__pin');
-  mapPin.type = 'button';
-  mapPin.style.left = inputMass.location.x + PinSize.RADIUS + 'px';
-  mapPin.style.top = inputMass.location.y + PinSize.HEIGHT + 'px';
+var createPin = function (inputElement) {
+  var mapPin = pinTemplate.cloneNode(true);
+  mapPin.style.left = (inputElement.location.x - PinSizes.RADIUS) + 'px';
+  mapPin.style.top = (inputElement.location.y - PinSizes.HEIGHT) + 'px';
 
-  var pinPicture = makeElement('img', 'map__pin');
-  pinPicture.src = inputMass.author.avatar;
-  pinPicture.alt = createAdvData.offer.title;
-  pinPicture.draggable = 'false';
+  var pinPicture = document.querySelector('.map__pin');
   mapPin.appendChild(pinPicture);
 
   return mapPin;
 };
 
+var fragmentPin = document.createDocumentFragment();
 
-var pinList = document.querySelector('#pin');
-
-createAdvData.forEach(function (pinAdv) {
-  var pinItem = createPin(pinAdv);
-  pinList.appendChild(pinItem);
+createAdvs.forEach(function (createAdv) {
+  var buttonFragment = createPin(createAdv);
+  fragmentPin.appendChild(buttonFragment);
 });
 
+pinTemplate.appendChild(fragmentPin);
 
-var del = document.querySelector('.map');
-del.classList.remove('map--faded');
+var delClass = document.querySelector('.map');
+delClass.classList.remove('map--faded');
