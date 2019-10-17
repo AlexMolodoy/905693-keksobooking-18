@@ -58,6 +58,8 @@ var createPin = function (inputElement) {
   return mapPin;
 };
 
+var pinElements = document.querySelector('#pin');
+
 var fragmentPin = document.createDocumentFragment();
 
 createAdvs.forEach(function (createAdv) {
@@ -65,7 +67,7 @@ createAdvs.forEach(function (createAdv) {
   fragmentPin.appendChild(buttonFragment);
 });
 
-pinTemplate.appendChild(fragmentPin);
+pinElements.appendChild(fragmentPin);
 
 var delClass = document.querySelector('.map');
 delClass.classList.remove('map--faded');
