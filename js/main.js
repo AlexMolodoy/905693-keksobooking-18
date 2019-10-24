@@ -1,5 +1,7 @@
 'use strict';
 
+var ENTER_KEYCODE = 13;
+
 var PinSize = {
   WIDTH: 70,
   HEIGHT: 50,
@@ -56,9 +58,33 @@ var createAds = function (count) {
   return ads;
 };
 
+// ------------------------------------------------
+var MainPinSize = {
+  WIDTH: 65,
+  HEIGHT: 80, // 1px — плавающий, в зависимости от выбора стороны округления
+  RADIUS: 32, // 1px — плавающий, в зависимости от выбора стороны округления
+};
+
 var map = document.querySelector('.map');
+var advInfoForm = document.querySelector('.ad-form');
+var adFields = document.querySelectorAll('fieldset');
+var filterFields = map.querySelectorAll('.map__filter, .map__checkbox');
+var mainPin = document.querySelector('.map__pin--main');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinContainer = document.querySelector('.map__pins');
+
+var adAddress = advInfoForm.querySelector('#address');
+
+var getMainPinCoords = function (height) {
+  return {
+    x: mainPin.offsetLeft + MainPinSize.RADIUS,
+    y: mainPin.offsetTop + height, // MainPinSize.RADIUS ИЛИ MainPinSize.HEIGHT
+  };
+};
+
+var renderAddress = function (coords) {
+  adAddress.value = coords.x + ', ' + coords.y;
+};
 
 var createPin = function (ad) {
   var pin = pinTemplate.cloneNode(true);
@@ -81,8 +107,52 @@ var renderPins = function (ads) {
   pinContainer.appendChild(fragment);
 };
 
-var ads = createAds(ADV_COUNT);
+var setDisabled = function (element) {
+  element.disabled = true;
+};
 
-renderPins(ads);
+var unsetDisabled = function (element) {
+  element.disabled = false;
+};
 
-map.classList.remove('map--faded');
+var onMainPinMouseDown = function () {
+  activatePage();
+};
+
+var onMainPinEnterPress = function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    activatePage();
+  }
+};
+
+var activatePage = function () {
+  map.classList.remove('map--faded');
+  advInfoForm.classList.remove('ad-form--disabled');
+
+  adFields.forEach(unsetDisabled);
+  filterFields.forEach(unsetDisabled);
+
+  var ads = createAds(ADV_COUNT);
+
+  renderPins(ads);
+
+  renderAddress(getMainPinCoords(MainPinSize.HEIGHT));
+
+  mainPin.removeEventListener('mousedown', onMainPinMouseDown);
+  mainPin.removeEventListener('keydown', onMainPinEnterPress);
+};
+
+var deactivatePage = function () {
+  map.classList.add('map--faded');
+  advInfoForm.classList.add('ad-form--disabled');
+
+  adFields.forEach(setDisabled);
+  filterFields.forEach(setDisabled);
+
+  renderAddress(getMainPinCoords(MainPinSize.RADIUS));
+
+  mainPin.addEventListener('mousedown', onMainPinMouseDown);
+  mainPin.addEventListener('keydown', onMainPinEnterPress);
+};
+
+deactivatePage();
