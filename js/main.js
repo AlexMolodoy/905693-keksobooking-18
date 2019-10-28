@@ -73,6 +73,8 @@ var mainPin = document.querySelector('.map__pin--main');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinContainer = document.querySelector('.map__pins');
 
+var resEvent = adFields.querySelector('.ad-form__reset');
+
 var adAddress = advInfoForm.querySelector('#address');
 
 var getMainPinCoords = function (height) {
@@ -154,5 +156,7 @@ var deactivatePage = function () {
   mainPin.addEventListener('mousedown', onMainPinMouseDown);
   mainPin.addEventListener('keydown', onMainPinEnterPress);
 };
+
+var onResButtonPress = 
 
 deactivatePage();
