@@ -1,4 +1,5 @@
 'use strict';
+
 (function () {
   window.ENTER_KEYCODE = 13;
 
@@ -26,7 +27,7 @@
   };
 
   window.createAds = function (count) {
-    window.ads = [];
+    var ads = [];
 
     for (var i = 1; i < count; i++) {
       window.ads.push({
@@ -55,7 +56,7 @@
       });
     }
 
-    return window.ads;
+    return ads;
   };
 
   window.MainPinSize = {
