@@ -2,8 +2,8 @@
 
 (function () {
 
-  var ENTER_KEYCODE = 13;
-  var ADV_COUNT = 8;
+  var enterKeycode = 13;
+  var advCount = 8;
 
   var setDisabled = function (element) {
     element.disabled = true;
@@ -14,8 +14,8 @@
   };
 
   window.util = {
-    ENTER_KEYCODE: ENTER_KEYCODE,
-    ADV_COUNT: ADV_COUNT,
+    enterKeycode: enterKeycode,
+    advCount: advCount,
     setDisabled: setDisabled,
     unsetDisabled: unsetDisabled,
   };

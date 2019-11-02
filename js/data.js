@@ -8,9 +8,9 @@
     BOTTOM: 630
   };
 
-  var ADV_TYPES = ['palace', 'flat', 'house', 'bungalo'];
-  var ADV_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-  var ADV_PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+  var advTypes = ['palace', 'flat', 'house', 'bungalo'];
+  var advfeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+  var advPhotos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
   var getRandomNumber = function (min, max) {
     return Math.floor(Math.random() * (max - min) + min);
@@ -29,14 +29,14 @@
           title: 'заголовок предложения',
           address: 'string',
           price: 100500,
-          type: ADV_TYPES[getRandomNumber(0, ADV_TYPES.length)],
+          type: advTypes[getRandomNumber(0, advTypes.length)],
           rooms: 4,
           guests: 4,
           checkin: 'string',
           checkout: 'string',
-          features: ADV_FEATURES.slice(0, getRandomNumber(0, ADV_FEATURES.length)),
+          features: advfeatures.slice(0, getRandomNumber(0, advfeatures.length)),
           description: 'string',
-          photos: ADV_PHOTOS.slice(0, getRandomNumber(0, ADV_PHOTOS.length))
+          photos: advPhotos.slice(0, getRandomNumber(0, advPhotos.length))
         },
 
         location: {
@@ -50,7 +50,6 @@
   };
 
   var map = document.querySelector('.map');
-
 
   window.data = {
     createAds: createAds,

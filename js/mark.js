@@ -10,8 +10,8 @@
 
   var MainPinSize = {
     WIDTH: 65,
-    HEIGHT: 80, // 1px — плавающий, в зависимости от выбора стороны округления
-    RADIUS: 32, // 1px — плавающий, в зависимости от выбора стороны округления
+    HEIGHT: 80,
+    RADIUS: 32,
   };
 
   var mainPin = document.querySelector('.map__pin--main');
@@ -21,7 +21,7 @@
   var getMainPinCoords = function (height) {
     return {
       x: mainPin.offsetLeft + MainPinSize.RADIUS,
-      y: mainPin.offsetTop + height, // MainPinSize.RADIUS ИЛИ MainPinSize.HEIGHT
+      y: mainPin.offsetTop + height,
     };
   };
 
@@ -32,7 +32,7 @@
     pin.style.left = (ad.location.x - PinSize.RADIUS) + 'px';
     pin.style.top = (ad.location.y - PinSize.HEIGHT) + 'px';
     pinImage.src = ad.author.avatar;
-    pinImage.alt = ad.offer.type;
+    pinImage.alt = ad.offer.title;
 
     return pin;
   };
@@ -46,7 +46,7 @@
     pinContainer.appendChild(fragment);
   };
 
-  window.pin = {
+  window.mark = {
     MainPinSize: MainPinSize,
     mainPin: mainPin,
     getMainPinCoords: getMainPinCoords,

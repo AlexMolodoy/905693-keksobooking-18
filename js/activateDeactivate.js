@@ -3,55 +3,57 @@
 (function () {
 
   var adFields = document.querySelectorAll('fieldset');
-  var filterFields = window.DataCue.map.querySelectorAll('.map__filter, .map__checkbox');
-  var resetButton = window.adressForm.adForm.querySelector('button[type="reset"]');
+  var filterFields = window.data.map.querySelectorAll('.map__filter, .map__checkbox');
+  var resetButton = window.adrInput.adForm.querySelector('button[type="reset"]');
 
   var onMainPinMouseDown = function () {
     activatePage();
   };
 
   var onMainPinEnterPress = function (evt) {
-    if (evt.keyCode === window.util.ENTER_KEYCODE) {
+    if (evt.keyCode === window.util.enterKeycode) {
       activatePage();
     }
   };
 
   var activatePage = function () {
     window.data.map.classList.remove('map--faded');
-    window.adressForm.adForm.classList.remove('ad-form--disabled');
+    window.adrInput.adForm.classList.remove('ad-form--disabled');
 
     adFields.forEach(window.util.unsetDisabled);
     filterFields.forEach(window.util.unsetDisabled);
 
-    var ads = window.data.createAds(window.util.ADV_COUNT);
+    var ads = window.data.createAds(window.util.advCount);
 
-    window.pin.renderPins(ads);
+    window.mark.renderPins(ads);
 
-    window.adressForm.renderAddress(window.pin.getMainPinCoords(window.pin.MainPinSize.HEIGHT));
+    window.adrInput.renderAddress(window.mark.getMainPinCoords(window.mark.MainPinSize.HEIGHT));
 
-    window.pin.mainPin.removeEventListener('mousedown', onMainPinMouseDown);
-    window.pin.mainPin.removeEventListener('keydown', onMainPinEnterPress);
+    window.mark.mainPin.removeEventListener('mousedown', onMainPinMouseDown);
+    window.mark.mainPin.removeEventListener('keydown', onMainPinEnterPress);
+    resetButton.addEventListener('click', onResetClick);
   };
 
   var deactivatePage = function () {
-    window.DataCue.map.classList.add('map--faded');
-    window.adressForm.adForm.classList.add('ad-form--disabled');
+    window.data.map.classList.add('map--faded');
+    window.adrInput.adForm.classList.add('ad-form--disabled');
 
     adFields.forEach(window.util.setDisabled);
     filterFields.forEach(window.util.setDisabled);
 
-    window.adressForm.renderAddress(window.pin.getMainPinCoords(window.pin.MainPinSize.RADIUS));
+    window.adrInput.renderAddress(window.mark.getMainPinCoords(window.mark.MainPinSize.RADIUS));
 
-    window.pin.mainPin.addEventListener('mousedown', onMainPinMouseDown);
-    window.pin.mainPin.addEventListener('keydown', onMainPinEnterPress);
+    window.mark.mainPin.addEventListener('mousedown', onMainPinMouseDown);
+    window.mark.mainPin.addEventListener('keydown', onMainPinEnterPress);
+    resetButton.removeEventListener('mousedown', onResetClick);
   };
 
   var onResetClick = function () {
-    deactivatePage(); // из модуля 'page'
+    deactivatePage();
   };
 
-  window.pin.mainPin.addEventListener('mousedown', onMainPinMouseDown);
-  window.pin.mainPin.addEventListener('keydown', onMainPinEnterPress);
+  window.mark.mainPin.addEventListener('mousedown', onMainPinMouseDown);
+  window.mark.mainPin.addEventListener('keydown', onMainPinEnterPress);
   resetButton.addEventListener('click', onResetClick);
 
 })();
