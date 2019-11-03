@@ -66,14 +66,15 @@ var MainPinSize = {
 };
 
 var map = document.querySelector('.map');
-var advInfoForm = document.querySelector('.ad-form');
+var adForm = document.querySelector('.ad-form');
 var adFields = document.querySelectorAll('fieldset');
 var filterFields = map.querySelectorAll('.map__filter, .map__checkbox');
 var mainPin = document.querySelector('.map__pin--main');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinContainer = document.querySelector('.map__pins');
+var resetButton = adForm.querySelector('button[type="reset"]');
 
-var adAddress = advInfoForm.querySelector('#address');
+var adAddress = adForm.querySelector('#address');
 
 var getMainPinCoords = function (height) {
   return {
@@ -127,7 +128,7 @@ var onMainPinEnterPress = function (evt) {
 
 var activatePage = function () {
   map.classList.remove('map--faded');
-  advInfoForm.classList.remove('ad-form--disabled');
+  adForm.classList.remove('ad-form--disabled');
 
   adFields.forEach(unsetDisabled);
   filterFields.forEach(unsetDisabled);
@@ -144,7 +145,7 @@ var activatePage = function () {
 
 var deactivatePage = function () {
   map.classList.add('map--faded');
-  advInfoForm.classList.add('ad-form--disabled');
+  adForm.classList.add('ad-form--disabled');
 
   adFields.forEach(setDisabled);
   filterFields.forEach(setDisabled);
@@ -155,4 +156,10 @@ var deactivatePage = function () {
   mainPin.addEventListener('keydown', onMainPinEnterPress);
 };
 
-deactivatePage();
+var onResetClick = function () {
+  deactivatePage(); // из модуля 'page'
+};
+
+mainPin.addEventListener('mousedown', onMainPinMouseDown);
+mainPin.addEventListener('keydown', onMainPinEnterPress);
+resetButton.addEventListener('click', onResetClick);
