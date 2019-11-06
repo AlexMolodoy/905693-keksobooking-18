@@ -23,9 +23,11 @@
     adFields.forEach(window.util.unsetDisabled);
     filterFields.forEach(window.util.unsetDisabled);
 
-    var ads = window.data.createAds(window.util.advCount);
+    window.load.getData('https://js.dump.academy/keksobooking/data', window.load.onSuccess, window.load.onError);
 
-    window.mark.renderPins(ads);
+    // var ads = window.data.createAds(window.util.advCount);
+
+    window.mark.renderPins(window.load.respData);
 
     window.adrInput.renderAddress(window.mark.getMainPinCoords(window.mark.MainPinSize.HEIGHT));
 
