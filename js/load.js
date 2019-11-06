@@ -9,8 +9,8 @@
 
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
-        onSuccess(xhr.response);
         window.load.RespData = xhr.response;
+        onSuccess(xhr.response);
       } else {
         onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
@@ -36,6 +36,7 @@
   };
 
   var onSuccess = function (data) {
+    window.activateDeactivate.activatePage();
     // eslint-disable-next-line no-console
     console.log(data);
   };

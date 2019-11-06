@@ -7,7 +7,7 @@
   var resetButton = window.adrInput.adForm.querySelector('button[type="reset"]');
 
   var onMainPinMouseDown = function () {
-    activatePage();
+    window.load.getData('https://js.dump.academy/keksobooking/data', window.load.onSuccess, window.load.onError);
   };
 
   var onMainPinEnterPress = function (evt) {
@@ -22,8 +22,6 @@
 
     adFields.forEach(window.util.unsetDisabled);
     filterFields.forEach(window.util.unsetDisabled);
-
-    window.load.getData('https://js.dump.academy/keksobooking/data', window.load.onSuccess, window.load.onError);
 
     // var ads = window.data.createAds(window.util.advCount);
 
@@ -57,5 +55,9 @@
   window.mark.mainPin.addEventListener('mousedown', onMainPinMouseDown);
   window.mark.mainPin.addEventListener('keydown', onMainPinEnterPress);
   resetButton.addEventListener('click', onResetClick);
+
+  window.activateDeactivate = {
+    activatePage: activatePage,
+  };
 
 })();
