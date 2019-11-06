@@ -2,6 +2,17 @@
 
 (function () {
   var respData = {};
+
+  var errorMessage = document.querySelector('#error').content.querySelector('.error');
+
+  var renderErrorMessage = function () {
+    window.util.mainTagRange.appendChild(errorMessage);
+    var dropButton = document.querySelector('button.error__button');
+    dropButton.addEventListener('mousedown', function () {
+      window.util.mainTagRange.removeChild(errorMessage);
+    });
+  };
+
   var getData = function (url, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
 
@@ -9,36 +20,32 @@
 
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
-        window.load.RespData = xhr.response;
         onSuccess(xhr.response);
       } else {
-        onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
+        onError();
       }
     });
 
     xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединения');
+      onError();
     });
 
     xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      onError();
     });
 
-    xhr.timeout = 10000; // 10s
+    xhr.timeout = 10000;
 
     xhr.open('GET', url);
     xhr.send();
   };
 
-  var onError = function (message) {
-    // eslint-disable-next-line no-console
-    console.error(message);
+  var onError = function () {
+    renderErrorMessage();
   };
 
   var onSuccess = function (data) {
-    window.activateDeactivate.activatePage();
-    // eslint-disable-next-line no-console
-    console.log(data);
+    window.activateDeactivate.activatePage(data);
   };
 
   window.load = {

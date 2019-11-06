@@ -16,16 +16,14 @@
     }
   };
 
-  var activatePage = function () {
+  var activatePage = function (data) {
     window.data.map.classList.remove('map--faded');
     window.adrInput.adForm.classList.remove('ad-form--disabled');
 
     adFields.forEach(window.util.unsetDisabled);
     filterFields.forEach(window.util.unsetDisabled);
 
-    // var ads = window.data.createAds(window.util.advCount);
-
-    window.mark.renderPins(window.load.respData);
+    window.mark.renderPins(data);
 
     window.adrInput.renderAddress(window.mark.getMainPinCoords(window.mark.MainPinSize.HEIGHT));
 
