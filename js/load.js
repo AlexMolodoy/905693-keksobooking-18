@@ -4,17 +4,20 @@
   var OK_SERV_RESPONSE = 200;
   var REQV_TIMEOUT = 10000;
 
-  var errorMessage = document.querySelector('#error').content.querySelector('.error');
+  var errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
 
   var renderErrorMessage = function () {
+    var errorMessage = errorMessageTemplate.cloneNode(true);
+    var errorButton = errorMessage.querySelector('.error__button');
+
+    var onErrorButtonClick = function () {
+      window.util.mainTagRange.removeChild(errorMessage);
+      errorButton.removeEventListener('click', onErrorButtonClick);
+    };
+
+    errorButton.addEventListener('click', onErrorButtonClick);
+
     window.util.mainTagRange.appendChild(errorMessage);
-    var dropButton = document.querySelector('button.error__button');
-    dropButton.addEventListener('mousedown', function () {
-      window.util.mainTagRange.removeChild(errorMessage);
-    });
-    dropButton.removeEventListener('mousedown', function () {
-      window.util.mainTagRange.removeChild(errorMessage);
-    });
   };
 
   var getData = function (url, onSuccess, onError) {
