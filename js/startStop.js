@@ -7,25 +7,23 @@
   var resetButton = window.adrInput.adForm.querySelector('button[type="reset"]');
 
   var onMainPinMouseDown = function () {
-    activatePage();
+    window.load.getData('https://js.dump.academy/keksobooking/data', window.load.onSuccess, window.load.onError);
   };
 
   var onMainPinEnterPress = function (evt) {
     if (evt.keyCode === window.util.enterKeycode) {
-      activatePage();
+      window.load.getData('https://js.dump.academy/keksobooking/data', window.load.onSuccess, window.load.onError);
     }
   };
 
-  var activatePage = function () {
+  var activatePage = function (data) {
     window.data.map.classList.remove('map--faded');
     window.adrInput.adForm.classList.remove('ad-form--disabled');
 
     adFields.forEach(window.util.unsetDisabled);
     filterFields.forEach(window.util.unsetDisabled);
 
-    var ads = window.data.createAds(window.util.advCount);
-
-    window.mark.renderPins(ads);
+    window.mark.renderPins(data);
 
     window.adrInput.renderAddress(window.mark.getMainPinCoords(window.mark.MainPinSize.HEIGHT));
 
@@ -41,6 +39,12 @@
     adFields.forEach(window.util.setDisabled);
     filterFields.forEach(window.util.setDisabled);
 
+    var remPins = window.mark.pinContainer.querySelectorAll('button[type="button"]');
+
+    remPins.forEach(function (remPin) {
+      window.mark.pinContainer.removeChild(remPin);
+    });
+
     window.adrInput.renderAddress(window.mark.getMainPinCoords(window.mark.MainPinSize.RADIUS));
 
     window.mark.mainPin.addEventListener('mousedown', onMainPinMouseDown);
@@ -55,5 +59,9 @@
   window.mark.mainPin.addEventListener('mousedown', onMainPinMouseDown);
   window.mark.mainPin.addEventListener('keydown', onMainPinEnterPress);
   resetButton.addEventListener('click', onResetClick);
+
+  window.startStop = {
+    activatePage: activatePage,
+  };
 
 })();

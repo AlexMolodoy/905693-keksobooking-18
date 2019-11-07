@@ -39,9 +39,9 @@
 
   var renderPins = function (ads) {
     var fragment = document.createDocumentFragment();
-    ads.forEach(function (ad) {
-      fragment.appendChild(createPin(ad));
-    });
+    for (var i = 0; i < window.util.advCount; i++) {
+      fragment.appendChild(createPin(ads[i]));
+    }
 
     pinContainer.appendChild(fragment);
   };
@@ -51,5 +51,6 @@
     mainPin: mainPin,
     getMainPinCoords: getMainPinCoords,
     renderPins: renderPins,
+    pinContainer: pinContainer,
   };
 })();

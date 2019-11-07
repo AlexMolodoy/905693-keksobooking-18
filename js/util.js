@@ -2,8 +2,10 @@
 
 (function () {
 
-  var enterKeycode = 13;
-  var advCount = 8;
+  var ENTER_KEYCODE = 13;
+  var ESC_KEYCODE = 27;
+  var ADV_COUNT = 8;
+  var mainTagRange = document.querySelector('main');
 
   var setDisabled = function (element) {
     element.disabled = true;
@@ -14,9 +16,11 @@
   };
 
   window.util = {
-    enterKeycode: enterKeycode,
-    advCount: advCount,
+    enterKeycode: ENTER_KEYCODE,
+    advCount: ADV_COUNT,
+    escKeycode: ESC_KEYCODE,
     setDisabled: setDisabled,
     unsetDisabled: unsetDisabled,
+    mainTagRange: mainTagRange,
   };
 })();
