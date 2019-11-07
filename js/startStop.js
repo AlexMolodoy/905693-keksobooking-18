@@ -60,7 +60,7 @@
   window.mark.mainPin.addEventListener('keydown', onMainPinEnterPress);
   resetButton.addEventListener('click', onResetClick);
 
-  window.activateDeactivate = {
+  window.startStop = {
     activatePage: activatePage,
   };
 

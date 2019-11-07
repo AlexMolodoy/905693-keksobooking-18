@@ -1,7 +1,8 @@
 'use strict';
 
 (function () {
-  var respData = {};
+  var OK_SERV_RESPONSE = 200;
+  var REQV_TIMEOUT = 10000;
 
   var errorMessage = document.querySelector('#error').content.querySelector('.error');
 
@@ -9,6 +10,9 @@
     window.util.mainTagRange.appendChild(errorMessage);
     var dropButton = document.querySelector('button.error__button');
     dropButton.addEventListener('mousedown', function () {
+      window.util.mainTagRange.removeChild(errorMessage);
+    });
+    dropButton.removeEventListener('mousedown', function () {
       window.util.mainTagRange.removeChild(errorMessage);
     });
   };
@@ -19,7 +23,7 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === OK_SERV_RESPONSE) {
         onSuccess(xhr.response);
       } else {
         onError();
@@ -34,7 +38,7 @@
       onError();
     });
 
-    xhr.timeout = 10000;
+    xhr.timeout = REQV_TIMEOUT;
 
     xhr.open('GET', url);
     xhr.send();
@@ -45,11 +49,10 @@
   };
 
   var onSuccess = function (data) {
-    window.activateDeactivate.activatePage(data);
+    window.startStop.activatePage(data);
   };
 
   window.load = {
-    respData: respData,
     getData: getData,
     onSuccess: onSuccess,
     onError: onError,
