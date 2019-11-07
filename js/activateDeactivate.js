@@ -12,7 +12,7 @@
 
   var onMainPinEnterPress = function (evt) {
     if (evt.keyCode === window.util.enterKeycode) {
-      activatePage();
+      window.load.getData('https://js.dump.academy/keksobooking/data', window.load.onSuccess, window.load.onError);
     }
   };
 
@@ -38,6 +38,12 @@
 
     adFields.forEach(window.util.setDisabled);
     filterFields.forEach(window.util.setDisabled);
+
+    var remPins = window.mark.pinContainer.querySelectorAll('button[type="button"]');
+
+    remPins.forEach(function (remPin) {
+      window.mark.pinContainer.removeChild(remPin);
+    });
 
     window.adrInput.renderAddress(window.mark.getMainPinCoords(window.mark.MainPinSize.RADIUS));
 

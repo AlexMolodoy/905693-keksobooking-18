@@ -54,5 +54,6 @@
     mainPin: mainPin,
     getMainPinCoords: getMainPinCoords,
     renderPins: renderPins,
+    pinContainer: pinContainer,
   };
 })();
