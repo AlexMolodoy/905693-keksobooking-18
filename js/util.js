@@ -4,7 +4,7 @@
 
   var ENTER_KEYCODE = 13;
   var ESC_KEYCODE = 27;
-  var ADV_COUNT = 8;
+  var ADV_COUNT = 5;
   var mainTagRange = document.querySelector('main');
 
   var setDisabled = function (element) {

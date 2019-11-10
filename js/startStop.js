@@ -5,6 +5,7 @@
   var adFields = document.querySelectorAll('fieldset');
   var filterFields = window.data.map.querySelectorAll('.map__filter, .map__checkbox');
   var resetButton = window.adrInput.adForm.querySelector('button[type="reset"]');
+  var remPins = window.mark.pinContainer.querySelectorAll('button[type="button"]');
 
   var onMainPinMouseDown = function () {
     window.load.getData('https://js.dump.academy/keksobooking/data', window.load.onSuccess, window.load.onError);
@@ -39,17 +40,17 @@
     adFields.forEach(window.util.setDisabled);
     filterFields.forEach(window.util.setDisabled);
 
-    var remPins = window.mark.pinContainer.querySelectorAll('button[type="button"]');
-
-    remPins.forEach(function (remPin) {
-      window.mark.pinContainer.removeChild(remPin);
-    });
+    window.startStop.remPins.forEach(deletePins);
 
     window.adrInput.renderAddress(window.mark.getMainPinCoords(window.mark.MainPinSize.RADIUS));
 
     window.mark.mainPin.addEventListener('mousedown', onMainPinMouseDown);
     window.mark.mainPin.addEventListener('keydown', onMainPinEnterPress);
     resetButton.removeEventListener('mousedown', onResetClick);
+  };
+
+  var deletePins = function (remPin) {
+    window.mark.pinContainer.removeChild(remPin);
   };
 
   var onResetClick = function () {
@@ -62,6 +63,8 @@
 
   window.startStop = {
     activatePage: activatePage,
+    remPins: remPins,
+    deletePins: deletePins,
   };
 
 })();

@@ -4,51 +4,45 @@
   var OK_SERV_RESPONSE = 200;
   var REQV_TIMEOUT = 10000;
 
-  var errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
-
-  var renderErrorMessage = function () {
-    var errorMessage = errorMessageTemplate.cloneNode(true);
-    var errorButton = errorMessage.querySelector('.error__button');
-
-    var onErrorButtonClick = function () {
-      window.util.mainTagRange.removeChild(errorMessage);
-      errorButton.removeEventListener('click', onErrorButtonClick);
-    };
-
-    errorButton.addEventListener('click', onErrorButtonClick);
-
-    window.util.mainTagRange.appendChild(errorMessage);
-  };
-
-  var getData = function (url, onSuccess, onError) {
+  var createRequest = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
+      xhr.responseType = 'json';
 
-    xhr.responseType = 'json';
+      xhr.addEventListener('load', function () {
+        if (xhr.status === OK_SERV_RESPONSE) {
+          onSuccess(xhr.response);
+        } else {
+          onError();
+        }
+      });
 
-    xhr.addEventListener('load', function () {
-      if (xhr.status === OK_SERV_RESPONSE) {
-        onSuccess(xhr.response);
-      } else {
+      xhr.addEventListener('error', function () {
         onError();
-      }
-    });
+      });
 
-    xhr.addEventListener('error', function () {
-      onError();
-    });
+      xhr.addEventListener('timeout', function () {
+        onError();
+      });
 
-    xhr.addEventListener('timeout', function () {
-      onError();
-    });
+      xhr.timeout = REQV_TIMEOUT;
 
-    xhr.timeout = REQV_TIMEOUT;
-
-    xhr.open('GET', url);
-    xhr.send();
+    return xhr;
   };
+
+ var getData = function (url, onSuccess, onError) {
+   var req = createRequest(onSuccess, onError);
+   req.open('GET', url);
+   req.send();
+ };
+
+ var putData = function (url, data, onSuccess, onError) {
+   var req = createRequest(onSuccess, onError);
+   req.open('POST', url);
+   req.send(data);
+ };
 
   var onError = function () {
-    renderErrorMessage();
+    window.modalBlocks.renderErrorMessage();
   };
 
   var onSuccess = function (data) {
@@ -57,7 +51,9 @@
 
   window.load = {
     getData: getData,
+    putData: putData,
     onSuccess: onSuccess,
     onError: onError,
+    createRequest: createRequest,
   };
 })();
