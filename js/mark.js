@@ -43,7 +43,7 @@
       fragment.appendChild(createPin(ad));
     });
 
-    pinContainer.appendChild(fragment);
+    window.mark.pinContainer.appendChild(fragment);
   };
 
   window.mark = {

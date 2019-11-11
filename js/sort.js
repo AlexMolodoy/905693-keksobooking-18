@@ -2,29 +2,30 @@
 
 (function () {
   var housingTypeSelector = document.querySelector('#housing-type');
-  var currentHousingType = housingTypeSelector.querySelector('#housing-type').options.selectedIndex;
 
-  housingTypeSelector.addEventListener('change', function () {alert();});
+  var similarAdsType = function () {
+    var goodAds = [];
+    var currentHousingType = document.querySelector('#housing-type').options[document.querySelector('#housing-type').options.selectedIndex].value;
 
+    window.load.currentAds.forEach(function (element) {
+      if (element.offer.type === currentHousingType) {
+        goodAds.push(element);
+      }
+    });
 
-  // var similarAdsType = function () {
-  //   var goodAds = [];
+    return goodAds;
+  };
 
-  //   window.load.createRequest.forEach(function (element) {
-  //     if (window.load.createRequest.offer.type === currentHousingType) {
-  //       goodAds.push(element);
-  //     }
-  //   });
+  var renderSimilarAds = function() {
+    similarAdsType();
+    window.startStop.delPins();
+    window.mark.renderPins(similarAdsType());
+  };
 
-  //   return goodAds;
-  // };
+  housingTypeSelector.addEventListener('change', renderSimilarAds);
 
-  // var renderSimilarAds = function() {
-  //   window.startStop.deletePins();
-  //   similarAdsType();
-  // };
-
-  // window.sort = {
-  //   renderSimilarAds: renderSimilarAds,
-  // };
+  window.sort = {
+    renderSimilarAds: renderSimilarAds,
+    similarAdsType: similarAdsType,
+  };
 })();
