@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var COMFORTABLE_QUANTITY_ADS = 5;
+
   var housingTypeSelector = document.querySelector('#housing-type');
 
   var similarAdsType = function () {
@@ -8,8 +10,10 @@
     var currentHousingType = document.querySelector('#housing-type').options[document.querySelector('#housing-type').options.selectedIndex].value;
 
     window.load.currentAds.forEach(function (element) {
-      if (element.offer.type === currentHousingType) {
-        goodAds.push(element);
+      if (goodAds.length <= COMFORTABLE_QUANTITY_ADS) {
+        if (element.offer.type === currentHousingType) {
+          goodAds.push(element);
+        }
       }
     });
 
@@ -25,6 +29,7 @@
   housingTypeSelector.addEventListener('change', renderSimilarAds);
 
   window.sort = {
+    goodAds: goodAds,
     renderSimilarAds: renderSimilarAds,
     similarAdsType: similarAdsType,
   };
