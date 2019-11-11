@@ -39,7 +39,3 @@
     renderSuccessMessage: renderSuccessMessage,
   };
 })();
-
-
-
-

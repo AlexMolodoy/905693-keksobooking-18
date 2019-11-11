@@ -16,7 +16,7 @@
     return goodAds;
   };
 
-  var renderSimilarAds = function() {
+  var renderSimilarAds = function () {
     similarAdsType();
     window.startStop.delPins();
     window.mark.renderPins(similarAdsType());
