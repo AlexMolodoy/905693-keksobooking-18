@@ -1,6 +1,11 @@
 'use strict';
 
 (function () {
+
+  var RequestUrl = {
+    GET: 'https://js.dump.academy/keksobooking/data',
+    POST: 'https://js.dump.academy/keksobooking',
+  };
   var OK_SERV_RESPONSE = 200;
   var REQV_TIMEOUT = 10000;
   var currentAds = [];
@@ -36,7 +41,7 @@
     req.send();
   };
 
-  var putData = function (url, data, onSuccess, onError) {
+  var postData = function (url, data, onSuccess, onError) {
     var req = createRequest(onSuccess, onError);
     req.open('POST', url);
     req.send(data);
@@ -48,15 +53,16 @@
 
   var onSuccess = function (data) {
     window.startStop.activatePage(data);
-    window.load.currentAds = data;
+    window.backend.currentAds = data;
   };
 
-  window.load = {
+  window.backend = {
     currentPins: currentAds,
     getData: getData,
-    putData: putData,
+    postData: postData,
     onSuccess: onSuccess,
     onError: onError,
     createRequest: createRequest,
+    RequestUrl: RequestUrl,
   };
 })();

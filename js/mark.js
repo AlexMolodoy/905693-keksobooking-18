@@ -37,20 +37,12 @@
     return pin;
   };
 
-  var renderPins = function (ads) {
-    var fragment = document.createDocumentFragment();
-    ads.forEach(function (ad) {
-      fragment.appendChild(createPin(ad));
-    });
-
-    window.mark.pinContainer.appendChild(fragment);
-  };
 
   window.mark = {
+    createPin: createPin,
     MainPinSize: MainPinSize,
     mainPin: mainPin,
     getMainPinCoords: getMainPinCoords,
-    renderPins: renderPins,
     pinContainer: pinContainer,
   };
 })();
