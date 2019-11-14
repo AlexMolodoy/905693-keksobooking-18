@@ -3,18 +3,19 @@
 (function () {
   var COMFORTABLE_QUANTITY_ADS = 5;
 
-  // #housing-type
+  var HousePrice = {
+    LOW: 1000,
+    HIGH: 50000,
+  };
+
+  var filters = document.querySelector('.map__filters');
   var housingTypeSelector = document.querySelector('#housing-type');
   var housingRoomsSelector = document.querySelector('#housing-rooms');
-  // var housingPriceSelector = document.querySelector('#housing-price');
+  var housingPriceSelector = document.querySelector('#housing-price');
   var housingGuestsSelector = document.querySelector('#housing-guests');
-  var filterWifiSelector = document.querySelector('#filter-wifi');
-  var filterDishwasherSelector = document.querySelector('#filter-dishwasher');
-  var filterParkingSelector = document.querySelector('#filter-parking');
-  var filterWasherSelector = document.querySelector('#filter-washer');
-  var filterElevatorSelector = document.querySelector('#filter-elevator');
-  var filterConditionerSelector = document.querySelector('#filter-conditioner');
+  var featureFieldSet = document.querySelector('#housing-features');
 
+  var checkedFeatures = null;
 
   var checkHousingType = function (ad) {
     return housingTypeSelector.value === 'any'
@@ -26,55 +27,48 @@
       || +housingRoomsSelector.value === ad.offer.rooms;
   };
 
-  // var checkHousingPrice = function (ad) {
-  //   return housingPriceSelector.value === 'any'
-  //   || housingPriceSelector.value === ad.offer.price;
-  // };
+  var priceTypeToFilter = {
+    low: function (price) {
+      return price < HousePrice.LOW;
+    },
+    middle: function (price) {
+      return price >= HousePrice.LOW && price < HousePrice.HIGH;
+    },
+    high: function (price) {
+      return price >= HousePrice.HIGH;
+    },
+  };
+
+  var checkHousingPrice = function (ad) {
+    return housingPriceSelector.value === 'any'
+       || priceTypeToFilter[housingPriceSelector.value](ad.offer.price);
+  };
 
   var checkHousingGuests = function (ad) {
     return housingGuestsSelector.value === 'any'
     || +housingGuestsSelector.value === ad.offer.guests;
   };
 
-  var checkFilterWifi = function () {
-    return filterWifiSelector.chekcked;
-  };
-
-  var checkFilterDishwasher = function () {
-    return filterDishwasherSelector.chekcked;
-  };
-
-  var checkFilterParking = function () {
-    return filterParkingSelector.chekcked;
-  };
-
-  var checkFilterWasher = function () {
-    return filterWasherSelector.chekcked;
-  };
-
-  var checkFilterElevator = function () {
-    return filterElevatorSelector.chekcked;
-  };
-
-  var checkFilterConditioner = function () {
-    return filterConditionerSelector.chekcked;
+  var checkFeatures = function (ad) {
+    return checkedFeatures.every(function (feature) {
+      return ad.offer.features.includes(feature.value);
+    });
   };
 
   var getFilteredAds = function () {
+    checkedFeatures = Array.from(featureFieldSet.querySelectorAll('input[type=checkbox]:checked'));
+
     var filteredAds = window.backend.currentAds
     .filter(function (ad) {
       return checkHousingType(ad)
               && checkHousingRooms(ad)
-              // && checkHousingPrice(ad)
+              && checkHousingPrice(ad)
               && checkHousingGuests(ad)
-              && checkFilterWifi()
-              && checkFilterDishwasher()
-              && checkFilterParking()
-              && checkFilterWasher()
-              && checkFilterElevator()
-              && checkFilterConditioner();
+              && checkFeatures(ad);
     })
     .slice(0, COMFORTABLE_QUANTITY_ADS);
+
+    checkedFeatures = null;
 
     return filteredAds;
   };
@@ -84,11 +78,12 @@
     window.map.renderPins(getFilteredAds());
   };
 
-  var onHousingTypeChange = function () {
+  var onFilterChange = function () {
+    window.card.remove();
     updateFilter();
   };
 
-  housingTypeSelector.addEventListener('change', onHousingTypeChange); // важно не забыть создавать обработчик
+  filters.addEventListener('change', onFilterChange);
 
   window.filter = {
     update: updateFilter,

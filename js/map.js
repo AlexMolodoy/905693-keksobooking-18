@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var canvas = document.querySelector('.map');
+  var map = document.querySelector('.map');
 
   var removePins = function () {
     var remPins = window.mark.pinContainer.querySelectorAll('button[type="button"]');
@@ -22,7 +22,7 @@
 
   window.map = {
     removePins: removePins,
-    canvas: canvas,
+    canvas: map,
     renderPins: renderPins,
   };
 })();
