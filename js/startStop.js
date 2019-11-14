@@ -31,7 +31,6 @@
     window.mark.mainPin.removeEventListener('mousedown', onMainPinMouseDown);
     window.mark.mainPin.removeEventListener('keydown', onMainPinEnterPress);
     resetButton.addEventListener('click', onResetClick);
-    console.log(data);
   };
 
   var deactivatePage = function () {

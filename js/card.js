@@ -1,12 +1,12 @@
 'use strict';
 
 (function () {
-  var HouseType = {
-    palace: 'Дворец',
-    house: 'Дом',
-    bungalo: 'Бунгало',
-    flst: 'Квартира',
-  };
+  // var HouseType = {
+  //   palace: 'Дворец',
+  //   house: 'Дом',
+  //   bungalo: 'Бунгало',
+  //   flst: 'Квартира',
+  // };
 
   var filterContainer = window.map.canvas.querySelector('.map__filters-container');
 
@@ -19,24 +19,29 @@
     card.querySelector('.popup__title').textContent = ad.offer.title;
     card.querySelector('.popup__text--address').textContent = ad.offer.address;
     card.querySelector('.popup__text--price').textContent = ad.offer.price + '₽/ночь';
+    // тип жилья добавляю по как в полученом объекте, надо как то переделать его на русский для этого придумал HouseType пока не знаю как использоватьы
     card.querySelector('.popup__type').textContent = ad.offer.type;
     card.querySelector('.popup__text--capacity').textContent = ad.offer.rooms + ' комнаты для ' + ad.offer.guests + ' гостей';
     card.querySelector('.popup__text--time').textContent = 'Заезд после ' + ad.offer.checkin + ', выезд до ' + ad.offer.checkout;
     //  не понимаю как добавить фичи
     card.querySelector('.popup__description').textContent = ad.offer.description;
     if (ad.offer.photos.length !== 0) {
-      // не могу добавить более 1 фотки
+      // лишний дом элемент остается не могу придумать что делать с ним
       ad.offer.photos.forEach(function (element) {
-        console.log(element);
-        var currentPhoto = card.querySelector('.popup__photo');
-        // currentPhoto.src = element;
-        currentPhoto.setAttribute('src', element);
-        // card.querySelector('.popup__photos').appendChild(currentPhoto);
-        console.log(card.querySelector('.popup__photos'));
+        var currentPhoto = card.querySelector('.popup__photo').cloneNode(true);
+        currentPhoto.src = element;
+        card.querySelector('.popup__photos').appendChild(currentPhoto);
       });
     } else {
       card.removeChild(card.querySelector('.popup__photos'));
     }
+
+    var removeCardRemoveEvent = function () {
+      removeCard();
+      card.querySelector('.popup__close').removeEventListener('click', removeCardRemoveEvent);
+    };
+
+    card.querySelector('.popup__close').addEventListener('click', removeCardRemoveEvent);
 
     return card;
   };
