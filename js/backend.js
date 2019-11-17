@@ -6,16 +6,17 @@
     GET: 'https://js.dump.academy/keksobooking/data',
     POST: 'https://js.dump.academy/keksobooking',
   };
-  var OK_SERV_RESPONSE = 200;
-  var REQV_TIMEOUT = 10000;
-  var currentAds = [];
+  var Status = {
+    OK: 200
+  };
+  var REQUEST_TIMEOUT = 10000;
 
   var createRequest = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === OK_SERV_RESPONSE) {
+      if (xhr.status === Status.OK) {
         onSuccess(xhr.response);
       } else {
         onError();
@@ -30,7 +31,7 @@
       onError();
     });
 
-    xhr.timeout = REQV_TIMEOUT;
+    xhr.timeout = REQUEST_TIMEOUT;
 
     return xhr;
   };
@@ -57,7 +58,7 @@
   };
 
   window.backend = {
-    currentPins: currentAds,
+    currentPins: [],
     getData: getData,
     postData: postData,
     onSuccess: onSuccess,

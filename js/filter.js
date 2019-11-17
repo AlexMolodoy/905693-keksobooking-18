@@ -32,10 +32,10 @@
       return price < HousePrice.LOW;
     },
     middle: function (price) {
-      return price >= HousePrice.LOW && price < HousePrice.HIGH;
+      return price >= HousePrice.LOW && price <= HousePrice.HIGH;
     },
     high: function (price) {
-      return price >= HousePrice.HIGH;
+      return price > HousePrice.HIGH;
     },
   };
 

@@ -25,6 +25,21 @@
     };
   };
 
+  var onMainPinRender = function (evt) {
+    var pinCoords = {
+      x: evt.clientX,
+      y: evt.clientY,
+    };
+
+    window.adrInput.renderAddress(pinCoords);
+    window.mark.mainPin.style.left = pinCoords.x + 'px';
+    mainPin.style.top = pinCoords.y + 'px';
+  };
+
+  mainPin.addEventListener('click', function () {
+    mainPin.addEventListener('mousemove', onMainPinRender);
+  });
+
   var setPinActive = function (pin, active) {
     pin.classList[active ? 'add' : 'remove']('map__pin--active');
   };
