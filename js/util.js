@@ -25,8 +25,8 @@
     element.disabled = false;
   };
 
-  // no operation
-  var noToDo = function () {};
+  var noToDo = function () {}; // no operation
+
 
   window.util = {
     isEscapeKey: isEscapeKey,
