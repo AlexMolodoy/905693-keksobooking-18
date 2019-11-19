@@ -1,8 +1,8 @@
 'use strict';
 
 (function () {
-  var houseTypeFormCost = window.adrInput.adForm.querySelector('#price');
-  var houseTypeFormSelector = window.adrInput.adForm.querySelector('#type');
+  var houseTypeFormCost = window.advertsInput.adForm.querySelector('#price');
+  var houseTypeFormSelector = window.advertsInput.adForm.querySelector('#type');
 
   var offerTypeToMinPrice = {
     bungalo: 0,
@@ -23,8 +23,8 @@
     setMinPrice();
   });
 
-  var houseTimeArive = window.adrInput.adForm.querySelector('#timein');
-  var houseTimeDepart = window.adrInput.adForm.querySelector('#timeout');
+  var houseTimeArive = window.advertsInput.adForm.querySelector('#timein');
+  var houseTimeDepart = window.advertsInput.adForm.querySelector('#timeout');
 
   houseTimeArive.addEventListener('change', function () {
     houseTimeDepart.value = houseTimeArive.value;
@@ -34,8 +34,8 @@
     houseTimeArive.value = houseTimeDepart.value;
   });
 
-  var roomNumber = window.adrInput.adForm.querySelector('#room_number');
-  var guestNumber = window.adrInput.adForm.querySelector('#capacity');
+  var roomNumber = window.advertsInput.adForm.querySelector('#room_number');
+  var guestNumber = window.advertsInput.adForm.querySelector('#capacity');
 
   var validateRoomAndGuest = function () {
     var rooms = +roomNumber.value;

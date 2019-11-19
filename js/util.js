@@ -8,14 +8,14 @@
     ESCAPE_IE: 'Escape',
   };
 
+  var ENTER_KEYCODE = 13;
+  var ESC_KEYCODE = 27;
+  var mainTagRange = document.querySelector('main');
+
   var isEscapeKey = function (evt) {
     return evt.key === KeyboardKey.ESCAPE
       || evt.key === KeyboardKey.ESCAPE_IE;
   };
-
-  var ENTER_KEYCODE = 13;
-  var ESC_KEYCODE = 27;
-  var mainTagRange = document.querySelector('main');
 
   var setDisabled = function (element) {
     element.disabled = true;
@@ -26,7 +26,7 @@
   };
 
   // no operation
-  var noop = function () {};
+  var noToDo = function () {};
 
   window.util = {
     isEscapeKey: isEscapeKey,
@@ -34,7 +34,7 @@
     escKeycode: ESC_KEYCODE,
     setDisabled: setDisabled,
     unsetDisabled: unsetDisabled,
-    onRemove: noop,
+    onRemove: noToDo,
     mainTagRange: mainTagRange,
   };
 })();

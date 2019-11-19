@@ -2,11 +2,11 @@
 
 (function () {
   var adFields = document.querySelectorAll('fieldset');
-  var resetButton = window.adrInput.adForm.querySelector('button[type="reset"]');
+  var resetButton = window.advertsInput.adForm.querySelector('button[type="reset"]');
 
   var activatePage = function () {
     window.map.canvas.classList.remove('map--faded');
-    window.adrInput.adForm.classList.remove('ad-form--disabled');
+    window.advertsInput.adForm.classList.remove('ad-form--disabled');
 
     adFields.forEach(window.util.unsetDisabled);
 
@@ -15,9 +15,9 @@
 
   var deactivatePage = function () {
     window.map.canvas.classList.add('map--faded');
-    window.adrInput.adForm.classList.add('ad-form--disabled');
+    window.advertsInput.adForm.classList.add('ad-form--disabled');
 
-    window.adrInput.adForm.reset();
+    window.advertsInput.adForm.reset();
     window.filter.deactivate();
 
     adFields.forEach(window.util.setDisabled);

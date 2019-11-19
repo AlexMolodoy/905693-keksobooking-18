@@ -61,13 +61,13 @@
     mainPin.removeEventListener('mousedown', onMainPinMouseDown);
   };
 
-  var renderPos = function (coords) { // { x: 0, y: 0 }
+  var renderPosition = function (coords) {
     mainPin.style.left = coords.x + 'px';
     mainPin.style.top = coords.y + 'px';
   };
 
   var resetMainPin = function () {
-    renderPos(initialCoords);
+    renderPosition(initialCoords);
     addMainPinListeners();
     window.mainPin.onReset(getMainPinCoords(MainPinSize.RADIUS));
   };
@@ -93,7 +93,7 @@
         y: Math.min(Math.max(y, MainPinRect.TOP), MainPinRect.BOTTOM),
       };
 
-      renderPos(offset);
+      renderPosition(offset);
       window.mainPin.onMove(getMainPinCoords(MainPinSize.HEIGHT));
     };
 

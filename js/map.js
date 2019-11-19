@@ -4,9 +4,9 @@
   var map = document.querySelector('.map');
 
   var removePins = function () {
-    var remPins = window.mark.pinContainer.querySelectorAll('.map__pin:not(.map__pin--main)');
+    var removablePins = window.mark.pinContainer.querySelectorAll('.map__pin:not(.map__pin--main)');
 
-    remPins.forEach(function (remPin) {
+    removablePins.forEach(function (remPin) {
       window.mark.pinContainer.removeChild(remPin);
     });
   };

@@ -55,7 +55,6 @@
     };
 
     window.addEventListener('keydown', closeSuccessMessage);
-    window.addEventListener('click', closeSuccessMessage);
     successMessage.addEventListener('mousedown', onPopupSuccessClick);
 
     window.util.mainTagRange.appendChild(successMessage);

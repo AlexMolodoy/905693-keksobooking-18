@@ -13,7 +13,7 @@
     evt.preventDefault();
     var formData = new FormData(adForm);
 
-    window.backned.postData(window.backend.RequestUrl.POST, formData, window.modalBlocks.renderSuccessMessage, window.backend.onError);
+    window.backend.postData(window.backend.RequestUrl.POST, formData, window.modalBlocks.renderSuccessMessage, window.modalBlocks.renderErrorMessage);
   });
 
   window.mainPin.onReset = function (coords) {
@@ -24,9 +24,9 @@
     renderAddress(coords);
   };
 
-  window.adrInput = {
+  window.advertsInput = {
     adForm: adForm,
-    rendaerAddress: renderAddress,
+    renderAddress: renderAddress,
     formPublicationButton: formPublicationButton,
   };
 })();
