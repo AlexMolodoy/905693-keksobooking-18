@@ -8,37 +8,9 @@
     RADIUS: 25
   };
 
-  var MainPinSize = {
-    WIDTH: 65,
-    HEIGHT: 80,
-    RADIUS: 32,
-  };
-
   var mainPin = document.querySelector('.map__pin--main');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var pinContainer = document.querySelector('.map__pins');
-
-  var getMainPinCoords = function (height) {
-    return {
-      x: mainPin.offsetLeft + MainPinSize.RADIUS,
-      y: mainPin.offsetTop + height,
-    };
-  };
-
-  var onMainPinRender = function (evt) {
-    var pinCoords = {
-      x: evt.clientX,
-      y: evt.clientY,
-    };
-
-    window.adrInput.renderAddress(pinCoords);
-    window.mark.mainPin.style.left = pinCoords.x + 'px';
-    mainPin.style.top = pinCoords.y + 'px';
-  };
-
-  mainPin.addEventListener('click', function () {
-    mainPin.addEventListener('mousemove', onMainPinRender);
-  });
 
   var setPinActive = function (pin, active) {
     pin.classList[active ? 'add' : 'remove']('map__pin--active');
@@ -66,7 +38,7 @@
 
       window.card.remove();
       window.card.show(ad);
-      window.card.onRemove = function () {
+      window.util.onRemove = function () {
         setPinActive(pin, false);
       };
     });
@@ -77,9 +49,7 @@
 
   window.mark = {
     createPin: createPin,
-    MainPinSize: MainPinSize,
     mainPin: mainPin,
-    getMainPinCoords: getMainPinCoords,
     pinContainer: pinContainer,
   };
 })();

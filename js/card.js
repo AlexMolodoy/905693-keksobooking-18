@@ -117,17 +117,13 @@
     var card = window.map.canvas.querySelector('.map__card');
     if (card !== null) {
       card.remove();
-      window.card.onRemove();
+      window.util.onRemove();
       document.removeEventListener('keydown', onCardEscapePress);
     }
   };
 
-  // no operation
-  var noop = function () {};
-
   window.card = {
     show: showCard,
     remove: removeCard,
-    onRemove: noop,
   };
 })();

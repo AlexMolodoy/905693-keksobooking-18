@@ -1,35 +1,15 @@
-
 'use strict';
 
 (function () {
-
   var adFields = document.querySelectorAll('fieldset');
-  var filterFields = window.map.canvas.querySelectorAll('.map__filter, .map__checkbox');
   var resetButton = window.adrInput.adForm.querySelector('button[type="reset"]');
 
-  var onMainPinMouseDown = function () {
-    window.backend.getData(window.backend.RequestUrl.GET, window.backend.onSuccess, window.backend.onError);
-  };
-
-  var onMainPinEnterPress = function (evt) {
-    if (evt.keyCode === window.util.enterKeycode) {
-      window.backend.getData(window.backend.RequestUrl.GET, window.load.onSuccess, window.load.onError);
-    }
-  };
-
-  var activatePage = function (data) {
+  var activatePage = function () {
     window.map.canvas.classList.remove('map--faded');
     window.adrInput.adForm.classList.remove('ad-form--disabled');
 
     adFields.forEach(window.util.unsetDisabled);
-    filterFields.forEach(window.util.unsetDisabled);
 
-    window.map.renderPins(data);
-
-    window.adrInput.renderAddress(window.mark.getMainPinCoords(window.mark.MainPinSize.HEIGHT));
-
-    window.mark.mainPin.removeEventListener('mousedown', onMainPinMouseDown);
-    window.mark.mainPin.removeEventListener('keydown', onMainPinEnterPress);
     resetButton.addEventListener('click', onResetClick);
   };
 
@@ -37,15 +17,14 @@
     window.map.canvas.classList.add('map--faded');
     window.adrInput.adForm.classList.add('ad-form--disabled');
 
+    window.adrInput.adForm.reset();
+    window.filter.deactivate();
+
     adFields.forEach(window.util.setDisabled);
-    filterFields.forEach(window.util.setDisabled);
 
+    window.card.remove();
     window.map.removePins();
-
-    window.adrInput.renderAddress(window.mark.getMainPinCoords(window.mark.MainPinSize.RADIUS));
-
-    window.mark.mainPin.addEventListener('mousedown', onMainPinMouseDown);
-    window.mark.mainPin.addEventListener('keydown', onMainPinEnterPress);
+    window.mainPin.reset();
     resetButton.removeEventListener('mousedown', onResetClick);
   };
 
@@ -53,9 +32,16 @@
     deactivatePage();
   };
 
-  window.mark.mainPin.addEventListener('mousedown', onMainPinMouseDown);
-  window.mark.mainPin.addEventListener('keydown', onMainPinEnterPress);
+  var onDomLoad = function () {
+    deactivatePage();
+  };
+
   resetButton.addEventListener('click', onResetClick);
+  document.addEventListener('DOMContentLoaded', onDomLoad);
+
+  window.mainPin.onFirstClick = function () {
+    window.backend.getData(window.backend.RequestUrl.GET, window.backend.onSuccess, window.backend.onError);
+  };
 
   window.startStop = {
     activatePage: activatePage,

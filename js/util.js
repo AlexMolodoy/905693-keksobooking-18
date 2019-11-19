@@ -25,12 +25,16 @@
     element.disabled = false;
   };
 
+  // no operation
+  var noop = function () {};
+
   window.util = {
     isEscapeKey: isEscapeKey,
     enterKeycode: ENTER_KEYCODE,
     escKeycode: ESC_KEYCODE,
     setDisabled: setDisabled,
     unsetDisabled: unsetDisabled,
+    onRemove: noop,
     mainTagRange: mainTagRange,
   };
 })();

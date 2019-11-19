@@ -2,6 +2,7 @@
 
 (function () {
   var COMFORTABLE_QUANTITY_ADS = 5;
+  var DEBOUNCE_INTERVAL = 500;
 
   var HousePrice = {
     LOW: 1000,
@@ -14,6 +15,7 @@
   var housingPriceSelector = document.querySelector('#housing-price');
   var housingGuestsSelector = document.querySelector('#housing-guests');
   var featureFieldSet = document.querySelector('#housing-features');
+  var filterFields = filters.querySelectorAll('.map__filter, .map__checkbox');
 
   var checkedFeatures = null;
 
@@ -73,9 +75,32 @@
     return filteredAds;
   };
 
+  var debounce = function (cb) {
+    var lastTimeout = null;
+
+    return function () {
+      var parameters = arguments;
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = window.setTimeout(function () {
+        cb.apply(null, parameters);
+      }, DEBOUNCE_INTERVAL);
+    };
+  };
+
   var updateFilter = function () {
     window.map.removePins();
     window.map.renderPins(getFilteredAds());
+  };
+
+  var deactivateFilter = function () {
+    filters.reset();
+    filterFields.forEach(window.util.setDisabled);
+  };
+
+  var activateFilter = function () {
+    filterFields.forEach(window.util.unsetDisabled);
   };
 
   var onFilterChange = function () {
@@ -83,9 +108,13 @@
     updateFilter();
   };
 
-  filters.addEventListener('change', onFilterChange);
+  var onFilterPauseChange = debounce(onFilterChange);
+
+  filters.addEventListener('change', onFilterPauseChange);
 
   window.filter = {
+    deactivate: deactivateFilter,
+    activate: activateFilter,
     update: updateFilter,
   };
 })();

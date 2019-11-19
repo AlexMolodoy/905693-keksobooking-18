@@ -49,12 +49,15 @@
   };
 
   var onError = function () {
+    window.startStop.activatePage();
     window.modalBlocks.renderErrorMessage();
   };
 
   var onSuccess = function (data) {
     window.startStop.activatePage(data);
     window.backend.currentAds = data;
+    window.filter.update();
+    window.filter.activate();
   };
 
   window.backend = {

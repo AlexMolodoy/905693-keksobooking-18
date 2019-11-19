@@ -5,7 +5,6 @@
   var adAddress = adForm.querySelector('#address');
   var formPublicationButton = adForm.querySelector('.ad-form__submit');
 
-
   var renderAddress = function (coords) {
     adAddress.value = coords.x + ', ' + coords.y;
   };
@@ -17,9 +16,17 @@
     window.backned.postData(window.backend.RequestUrl.POST, formData, window.modalBlocks.renderSuccessMessage, window.backend.onError);
   });
 
+  window.mainPin.onReset = function (coords) {
+    renderAddress(coords);
+  };
+
+  window.mainPin.onMove = function (coords) {
+    renderAddress(coords);
+  };
+
   window.adrInput = {
     adForm: adForm,
-    renderAddress: renderAddress,
+    rendaerAddress: renderAddress,
     formPublicationButton: formPublicationButton,
   };
 })();
