@@ -1,54 +1,30 @@
 'use strict';
 
 (function () {
-
   var adFields = document.querySelectorAll('fieldset');
-  var filterFields = window.data.map.querySelectorAll('.map__filter, .map__checkbox');
-  var resetButton = window.adrInput.adForm.querySelector('button[type="reset"]');
+  var resetButton = window.advertsInput.adForm.querySelector('button[type="reset"]');
 
-  var onMainPinMouseDown = function () {
-    window.load.getData('https://js.dump.academy/keksobooking/data', window.load.onSuccess, window.load.onError);
-  };
-
-  var onMainPinEnterPress = function (evt) {
-    if (evt.keyCode === window.util.enterKeycode) {
-      window.load.getData('https://js.dump.academy/keksobooking/data', window.load.onSuccess, window.load.onError);
-    }
-  };
-
-  var activatePage = function (data) {
-    window.data.map.classList.remove('map--faded');
-    window.adrInput.adForm.classList.remove('ad-form--disabled');
+  var activatePage = function () {
+    window.map.canvas.classList.remove('map--faded');
+    window.advertsInput.adForm.classList.remove('ad-form--disabled');
 
     adFields.forEach(window.util.unsetDisabled);
-    filterFields.forEach(window.util.unsetDisabled);
 
-    window.mark.renderPins(data);
-
-    window.adrInput.renderAddress(window.mark.getMainPinCoords(window.mark.MainPinSize.HEIGHT));
-
-    window.mark.mainPin.removeEventListener('mousedown', onMainPinMouseDown);
-    window.mark.mainPin.removeEventListener('keydown', onMainPinEnterPress);
     resetButton.addEventListener('click', onResetClick);
   };
 
   var deactivatePage = function () {
-    window.data.map.classList.add('map--faded');
-    window.adrInput.adForm.classList.add('ad-form--disabled');
+    window.map.canvas.classList.add('map--faded');
+    window.advertsInput.adForm.classList.add('ad-form--disabled');
+
+    window.advertsInput.adForm.reset();
+    window.filter.deactivate();
 
     adFields.forEach(window.util.setDisabled);
-    filterFields.forEach(window.util.setDisabled);
 
-    var remPins = window.mark.pinContainer.querySelectorAll('button[type="button"]');
-
-    remPins.forEach(function (remPin) {
-      window.mark.pinContainer.removeChild(remPin);
-    });
-
-    window.adrInput.renderAddress(window.mark.getMainPinCoords(window.mark.MainPinSize.RADIUS));
-
-    window.mark.mainPin.addEventListener('mousedown', onMainPinMouseDown);
-    window.mark.mainPin.addEventListener('keydown', onMainPinEnterPress);
+    window.card.remove();
+    window.map.removePins();
+    window.mainPin.reset();
     resetButton.removeEventListener('mousedown', onResetClick);
   };
 
@@ -56,12 +32,18 @@
     deactivatePage();
   };
 
-  window.mark.mainPin.addEventListener('mousedown', onMainPinMouseDown);
-  window.mark.mainPin.addEventListener('keydown', onMainPinEnterPress);
+  var onDomLoad = function () {
+    deactivatePage();
+  };
+
   resetButton.addEventListener('click', onResetClick);
+  document.addEventListener('DOMContentLoaded', onDomLoad);
+
+  window.mainPin.onFirstClick = function () {
+    window.backend.getData(window.backend.RequestUrl.GET, window.backend.onSuccess, window.backend.onError);
+  };
 
   window.startStop = {
     activatePage: activatePage,
   };
-
 })();
