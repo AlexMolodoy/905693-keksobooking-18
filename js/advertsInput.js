@@ -12,8 +12,11 @@
   adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
     var formData = new FormData(adForm);
+    window.validation.onErrorTitle();
+    window.validation.onErrorPriceNumber();
+    var testValidity = adForm.reportValidity();
 
-    if (window.validation.onErrorPriceNumber() && window.validation.onErrorTitle()) {
+    if (testValidity) {
       window.backend.postData(window.backend.RequestUrl.POST, formData, window.modalBlocks.renderSuccessMessage, window.modalBlocks.renderErrorMessage);
     }
   });

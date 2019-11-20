@@ -18,7 +18,7 @@
   };
 
   var setDisabled = function (element) {
-    element.disabled = true;
+    element.disabled = false;
   };
 
   var unsetDisabled = function (element) {
