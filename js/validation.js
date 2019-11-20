@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+  var minPrice = offerTypeToMinPrice[houseTypeFormSelector.value];
+
+  var houseTitleForm = window.advertsInput.adForm.querySelector('#title');
   var houseTypeFormCost = window.advertsInput.adForm.querySelector('#price');
   var houseTypeFormSelector = window.advertsInput.adForm.querySelector('#type');
 
@@ -12,10 +15,41 @@
   };
 
   var setMinPrice = function () {
-    var minPrice = offerTypeToMinPrice[houseTypeFormSelector.value];
     houseTypeFormCost.min = minPrice;
     houseTypeFormCost.placeholder = minPrice;
   };
+
+  var onErrorTitle = function () {
+    if (houseTitleForm.placeholder < minPrice) {
+      houseTitleForm.setCustomValidity('Сколько стоит?');
+      houseTitleForm.classList.add('error-field');
+      return false;
+    } else {
+      houseTitleForm.setCustomValidity('');
+      houseTitleForm.classList.remove('error-field');
+      return true;
+    }
+  };
+
+  houseTitleForm.addEventListener('change', function () {
+    onErrorTitle();
+  });
+
+  var onErrorPriceNumber = function () {
+    if (!houseTypeFormCost.value) {
+      houseTypeFormCost.setCustomValidity('Сколько стоит?');
+      houseTypeFormCost.classList.add('error-field');
+      return false;
+    } else {
+      houseTypeFormCost.setCustomValidity('');
+      houseTypeFormCost.classList.remove('error-field');
+      return true;
+    }
+  };
+
+  houseTypeFormCost.addEventListener('change', function () {
+    onErrorPriceNumber();
+  });
 
   setMinPrice();
 
@@ -62,5 +96,7 @@
     validateRoomAndGuest();
   });
   window.validation = {
+    onErrorPriceNumber: onErrorPriceNumber,
+    onErrorTitle: onErrorTitle,
   };
 })();

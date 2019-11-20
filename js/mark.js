@@ -38,7 +38,7 @@
 
       window.card.remove();
       window.card.show(ad);
-      window.util.onRemove = function () {
+      window.card.onRemove = function () {
         setPinActive(pin, false);
       };
     });
